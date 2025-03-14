@@ -1,4 +1,4 @@
-# 💪 GymPass API
+# 🏋️‍♂️ GymPass API
 
 A Node.js API for a GymPass-style application that allows users to check in at gyms. Built using SOLID principles, modern design patterns, Docker, and PostgreSQL.
 
