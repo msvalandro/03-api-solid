@@ -6,3 +6,9 @@
 
 # Build
 /build
+
+# Tests
+/coverage
+
+# Editor
+.DS_Store
