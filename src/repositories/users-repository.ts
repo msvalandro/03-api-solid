@@ -6,7 +6,7 @@ export interface User {
   created_at: Date
 }
 
-interface UserCreateInput {
+export interface UserCreateInput {
   name: string
   email: string
   password_hash: string
