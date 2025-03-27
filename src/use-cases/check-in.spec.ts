@@ -82,4 +82,21 @@ describe('UseCases: CheckIn', () => {
 
     expect(checkIn.id).toEqual(expect.any(String))
   })
+
+  it('should not be able to check in on a distant gym', async () => {
+    gymsRepository.create({
+      title: 'PHP Gym',
+      latitude: 41.1576144,
+      longitude: -8.6299028,
+    })
+
+    await expect(
+      sut.execute({
+        userId: 'user-01',
+        gymId: gym.id,
+        userLatitude: 41.166418,
+        userLongitude: -8.6775865,
+      }),
+    ).rejects.toBeInstanceOf(Error)
+  })
 })
