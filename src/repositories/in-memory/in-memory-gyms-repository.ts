@@ -13,12 +13,21 @@ export class InMemoryGymsRepository implements GymsRepository {
     return gym ?? null
   }
 
-  async create({ title, latitude, longitude }: GymCreateInput): Promise<Gym> {
+  async create({
+    title,
+    description,
+    phone,
+    latitude,
+    longitude,
+  }: GymCreateInput): Promise<Gym> {
     const gym = {
       id: randomUUID(),
       title,
+      description,
+      phone,
       latitude,
       longitude,
+      created_at: new Date(),
     }
 
     this.gyms.push(gym)

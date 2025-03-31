@@ -5,6 +5,8 @@ import { Gym, GymsRepository } from '@/repositories/gyms-repository'
 import { InMemoryCheckInsRepository } from '@/repositories/in-memory/in-memory-check-ins-repository'
 import { InMemoryGymsRepository } from '@/repositories/in-memory/in-memory-gyms-repository'
 import { CheckInUseCase } from './check-in'
+import { MaxDistanceError } from './errors/max-distance'
+import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins'
 
 describe('UseCases: CheckIn', () => {
   let checkInsRepository: CheckInsRepository
@@ -19,6 +21,8 @@ describe('UseCases: CheckIn', () => {
 
     gym = await gymsRepository.create({
       title: 'JavaScript Gym',
+      description: null,
+      phone: null,
       latitude: 0,
       longitude: 0,
     })
@@ -58,7 +62,7 @@ describe('UseCases: CheckIn', () => {
         userLatitude: 0,
         userLongitude: 0,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxNumberOfCheckInsError)
   })
 
   it('should be able to check in twice in different days', async () => {
@@ -86,6 +90,8 @@ describe('UseCases: CheckIn', () => {
   it('should not be able to check in on a distant gym', async () => {
     gymsRepository.create({
       title: 'PHP Gym',
+      description: null,
+      phone: null,
       latitude: 41.1576144,
       longitude: -8.6299028,
     })
@@ -97,6 +103,6 @@ describe('UseCases: CheckIn', () => {
         userLatitude: 41.166418,
         userLongitude: -8.6775865,
       }),
-    ).rejects.toBeInstanceOf(Error)
+    ).rejects.toBeInstanceOf(MaxDistanceError)
   })
 })
