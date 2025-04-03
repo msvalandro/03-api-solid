@@ -1,4 +1,8 @@
 import { makeCreateGymUseCase } from '@/use-cases/factories/make-create-gym-use-case'
+import {
+  validateLatitude,
+  validateLongitude,
+} from '@/utils/validate-latitude-and-longitude-body-schema'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
 
@@ -7,12 +11,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
     title: z.string(),
     description: z.string().nullable(),
     phone: z.string().nullable(),
-    latitude: z.number().refine((value) => {
-      return Math.abs(value) <= 90
-    }),
-    longitude: z.number().refine((value) => {
-      return Math.abs(value) <= 180
-    }),
+    latitude: validateLatitude(),
+    longitude: validateLongitude(),
   })
 
   const { title, description, phone, latitude, longitude } =
